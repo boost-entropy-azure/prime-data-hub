@@ -23,13 +23,17 @@ const mockUsePagination = {
     currentPageResults: makeDeliveryFixtureArray(10),
     paginationProps: { currentPageNum: 1, slots: [1, 2, 3, 4] },
     isLoading: false,
+    setSearchTerm: () => {
+        return;
+    },
+    searchTerm: "",
 };
 
 const mockReceivers = receiversGenerator(5);
 const mockActiveReceiver = mockReceivers[0];
 
-jest.mock("../../../hooks/UsePagination", () => ({
-    ...jest.requireActual("../../../hooks/UsePagination"),
+vi.mock("../../../hooks/UsePagination", async (importActual) => ({
+    ...(await importActual<typeof import("../../../hooks/UsePagination")>()),
     default: () => {
         return {
             ...mockUsePagination,
